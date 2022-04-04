@@ -15,6 +15,7 @@ def make_md5(s, encoding='utf-8'):
     return md5(s.encode(encoding)).hexdigest()
 
 
+# 调用有道翻译
 def translate(chinese, from_lang='zh', to_lang='en'):
     # Set your own appid/appkey.
     appid = '20220213001081942'

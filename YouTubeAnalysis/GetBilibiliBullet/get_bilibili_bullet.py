@@ -3,7 +3,7 @@ import requests
 import pandas as pd
 import time
 from tqdm import trange
-import utils
+
 
 # 视频页面点击“浏览器地址栏小锁-Cookie-bilibili.com-Cookie-SESSDATA”进行获取
 SESSDATA = "393e5651%2C1658538566%2Ccaeed*11"
@@ -77,7 +77,6 @@ if __name__ == "__main__":
     vid = input("输入视频编号: ")
     info = get_info(vid)
     bullets = get_bullet(info)
-    print(len(bullets))
-    sheet = utils.getCollection2MongoDB("bullet")
-    sheet.insert_one({"vid": vid, "bullets": bullets})
-
+    with open("../Resource/Bullets/" + vid + ".txt", "w", encoding="utf-8") as f:
+        for b in bullets:
+            f.write(b + "\n")

@@ -4,7 +4,6 @@ import pyLDAvis.gensim_models
 from biterm.cbtm import oBTM
 from sklearn.feature_extraction.text import CountVectorizer
 from biterm.utility import vec_to_biterms, topic_summuary  # helper functions
-from YouTubeAnalysis.util import utils
 
 
 def BTM(file, topicNum):
@@ -50,4 +49,4 @@ def BTM(file, topicNum):
 
 
 if __name__ == "__main__":
-    BTM("../resource/Comments/in3pYWFwPvE.txt", 5)
+    BTM("../Resource/Comments/in3pYWFwPvE.txt", 5)

@@ -2,12 +2,12 @@ import matplotlib.pyplot as plt
 import pyLDAvis.gensim_models
 from gensim import corpora, models
 from gensim.models import CoherenceModel
-from YouTubeAnalysis.util import utils
+from YouTubeAnalysis.Util import utils
 
 
 def calLDA(documents, topics):
     words_ls = []
-    stopwords = utils.readStopWord()
+    stopwords = utils.ReadStopWord()
 
     for text in documents:
         words = []
@@ -45,7 +45,6 @@ def calLDA(documents, topics):
             if val > topic_val:
                 topic_val = val
                 topic_id = tid
-        # print(topic_id, '->', documents[e])
         result.append(str(topic_id) + '->' + str(documents[e]))
     result.sort()
     coherenceScore = c.get_coherence()
@@ -53,22 +52,16 @@ def calLDA(documents, topics):
     return result, coherenceScore
 
 
-if __name__ == '__main__':
-    texts = open("../resource/Comments/bGzbJpLExDM.txt").read().splitlines()
-    comments = [i for i in texts if len(i) > 0]
-    for t in texts:
-        comments.append(t.replace("\n", " "))
-    calLDA(comments, 5)
-
-    # 获取一致性最大的结果
-    # coherence = []
-    # maxIndex = 1
-    # maxValue = 0
-    # for i in range(2, 11):
-    #     c = calLDA(comments, i)[1]
-    #     if c > maxValue:
-    #         maxValue = c
-    #         maxIndex = i
+# 获取一致性最大时的主题数
+def getMaxCoherence(comment):
+    maxIndex = 2
+    maxValue = calLDA(comment, 2)[1]
+    for i in range(2, 11):
+        c = calLDA(comment, i)[1]
+        if c > maxValue:
+            maxValue = c
+            maxIndex = i
+    return maxIndex
 
 
 def drawCoherence(c):
@@ -77,3 +70,11 @@ def drawCoherence(c):
     plt.xlabel("Num Topics")
     plt.ylabel("coherence")
     plt.show()
+
+
+if __name__ == '__main__':
+    texts = open("../Resource/Comments/bGzbJpLExDM.txt").read().splitlines()
+    comments = [i for i in texts if len(i) > 0]
+    for t in texts:
+        comments.append(t.replace("\n", " "))
+    calLDA(comments, 5)

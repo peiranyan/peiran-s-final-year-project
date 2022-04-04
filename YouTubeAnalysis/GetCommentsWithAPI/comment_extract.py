@@ -11,7 +11,6 @@ key = 'AIzaSyB79D7aUsAxJUla6gJqqFsXvelkin3y434'
 def commentExtract(videoId, count=-1):
     print("Comments downloading")
     page_info = requests.get(YOUTUBE_LINK.format(videoId=videoId, key=key))
-    print(page_info)
     while page_info.status_code != 200:
         if page_info.status_code != 429:
             print("Comments disabled")
@@ -22,8 +21,8 @@ def commentExtract(videoId, count=-1):
     page_info = page_info.json()
     comments = []
     co = 0
-    for i in range(len(page_info['items'])):
 
+    for i in range(len(page_info['items'])):
         comment = page_info['items'][i]['snippet']['topLevelComment']['snippet']['textOriginal']
         if langid.classify(comment)[0] == "en":
             comments.append(comment)
