@@ -1,6 +1,6 @@
 import csv
 import comment_extract
-
+from YouTubeAnalysis.Util import utils
 
 def readVideoIDsFromFile():
     IDs = []
@@ -26,4 +26,8 @@ def getComments(ID, countOfComment):
 
 
 if __name__ == '__main__':
-    getComments("in3pYWFwPvE", 1000)
+    YIDs = utils.GetAllYid()
+    # Get all ids and crawl 1000 comments per video
+    for i in YIDs:
+        getComments(i, 1000)
+

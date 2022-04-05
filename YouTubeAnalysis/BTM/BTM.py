@@ -4,6 +4,7 @@ import pyLDAvis.gensim_models
 from biterm.cbtm import oBTM
 from sklearn.feature_extraction.text import CountVectorizer
 from biterm.utility import vec_to_biterms, topic_summuary  # helper functions
+from YouTubeAnalysis.Util import utils
 
 
 def BTM(file, topicNum):
@@ -14,7 +15,7 @@ def BTM(file, topicNum):
     vec = CountVectorizer(stop_words='english')
     X = vec.fit_transform(texts).toarray()
 
-    # 用于处理单词数少于1个的断句 做了近似处理
+    # For processing broken sentences
     for i in range(len(X)):
         if sum(X[i]) <= 2:
             X[i][0] = 1
@@ -38,7 +39,7 @@ def BTM(file, topicNum):
     print("\n\n Visualize Topics ..")
     vis = pyLDAvis.prepare(btm.phi_wz.T, topics, np.count_nonzero(X, axis=1), vocab, np.sum(X, axis=0), mds='mmds')
 
-    pyLDAvis.save_html(vis, './online_btm.html')
+    pyLDAvis.save_html(vis, "./online_btm.html")
 
     print("\n\n Topic coherence ..")
     topic_summuary(btm.phi_wz.T, X, vocab, 10)
@@ -49,4 +50,5 @@ def BTM(file, topicNum):
 
 
 if __name__ == "__main__":
-    BTM("../Resource/Comments/in3pYWFwPvE.txt", 5)
+    yid = "T3_oj9hh1ag"
+    BTM("../Resource/Comments/" + yid + ".txt", 4)

@@ -5,9 +5,9 @@ import time
 from tqdm import trange
 
 
-# 视频页面点击“浏览器地址栏小锁-Cookie-bilibili.com-Cookie-SESSDATA”进行获取
+# Click on "cookie-bilibili.com-Cookie-SESSDATA" in your browser's address bar to get it.
 SESSDATA = "393e5651%2C1658538566%2Ccaeed*11"
-# 视频页面“按F12-Console-输入document.cookie”进行获取
+# "Press F12-Console-enter document.cookie" to get video page
 cookie = "buvid3=6EADC56B-5867-6BD4-D6F9-3DA1A5DDB97F38051infoc; i-wanna-go-back=-1; " \
          "_uuid=4BD8C246-6BF4-5E5D-10FEC-E55A9CB13A9538290infoc; sid=cel91s1j; buvid_fp_plain=undefined; " \
          "DedeUserID=36858087; DedeUserID__ckMd5=751e0d42f9c0541a; b_ut=5; bp_t_offset_36858087=618896695645092229; " \
@@ -29,12 +29,12 @@ def get_info(vid):
     response.encoding = "utf-8"
     data = response.json()
     info = {}
-    info["标题"] = data["data"]["View"]["title"]
-    info["总弹幕数"] = data["data"]["View"]["stat"]["danmaku"]
-    info["视频数量"] = data["data"]["View"]["videos"]
+    info["Title"] = data["data"]["View"]["title"]
+    info["Total no. of bullet chats"] = data["data"]["View"]["stat"]["danmaku"]
+    info["No. of videos"] = data["data"]["View"]["videos"]
     info["cid"] = [dic["cid"] for dic in data["data"]["View"]["pages"]]
-    if info["视频数量"] > 1:
-        info["子标题"] = [dic["part"] for dic in data["data"]["View"]["pages"]]
+    if info["No. of videos"] > 1:
+        info["Child title"] = [dic["part"] for dic in data["data"]["View"]["pages"]]
     for k, v in info.items():
         print(k + ":", v)
     return info
@@ -53,10 +53,10 @@ def get_danmu(info, start, end):
             data = re.findall(r"[:](.*?)[@]", response.text)
             dms += [dm[1:] for dm in data]
             time.sleep(3)
-        if info["视频数量"] > 1:
-            print("cid:", cid, "弹幕数:", len(dms), "子标题:", info["子标题"][i])
+        if info["No. of videos"] > 1:
+            print("cid:", cid, "No. of bullet chats:", len(dms), "Child title:", info["Child title"][i])
         all_dms += dms
-    print(f"共获取弹幕{len(all_dms)}条！")
+    print(f"There {len(all_dms)} bullet chats！")
     return all_dms
 
 
@@ -74,7 +74,7 @@ def get_bullet(information):
 
 
 if __name__ == "__main__":
-    vid = input("输入视频编号: ")
+    vid = input("Input BV number: ")
     info = get_info(vid)
     bullets = get_bullet(info)
     with open("../Resource/Bullets/" + vid + ".txt", "w", encoding="utf-8") as f:

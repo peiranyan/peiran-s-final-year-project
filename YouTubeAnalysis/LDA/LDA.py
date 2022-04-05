@@ -16,27 +16,27 @@ def calLDA(documents, topics):
                 words.append(w)
         words_ls.append(words)
 
-    # 生成语料词典
+    # Generate a dictionary of idiomatic expressions
     dictionary = corpora.Dictionary(words_ls)
-    # 生成稀疏向量集
+    # Generate sparse vector sets
     corpus = [dictionary.doc2bow(words) for words in words_ls]
-    # LDA模型，num_topics设置聚类数，即最终主题的数量
+    # LDA model
     lda = models.ldamodel.LdaModel(corpus=corpus, id2word=dictionary, num_topics=topics)
 
     c = CoherenceModel(model=lda, texts=words_ls, dictionary=dictionary, coherence='c_v')
 
-    plot = pyLDAvis.gensim_models.prepare(lda, corpus, dictionary)
-    # 保存到本地html
+    plot = pyLDAvis.gensim_models.prepare(lda, corpus, dictionary, mds='mmds')
+    # Save as .html file
     pyLDAvis.save_html(plot, 'pyLDAvis.html')
 
-    # 展示每个主题的前5的词语
+    # Show the top 10 words in one topic
     with open("../GetCommentsWithAPI/topic.txt", "w+", encoding="utf-8") as f:
         for topic in lda.print_topics(num_words=10):
             print(topic)
             f.write(str(topic[0]) + " ---> " + str(topic[1]) + "\n")
 
-    # 推断每个语料库中的主题类别
-    print('推断：')
+
+    print('Result：')
     result = []
     for e, values in enumerate(lda.inference(corpus)[0]):
         topic_val = 0
@@ -47,34 +47,16 @@ def calLDA(documents, topics):
                 topic_id = tid
         result.append(str(topic_id) + '->' + str(documents[e]))
     result.sort()
-    coherenceScore = c.get_coherence()
-
-    return result, coherenceScore
+    return result
 
 
-# 获取一致性最大时的主题数
-def getMaxCoherence(comment):
-    maxIndex = 2
-    maxValue = calLDA(comment, 2)[1]
-    for i in range(2, 11):
-        c = calLDA(comment, i)[1]
-        if c > maxValue:
-            maxValue = c
-            maxIndex = i
-    return maxIndex
 
-
-def drawCoherence(c):
-    x = range(1, 11)
-    plt.plot(x, c)
-    plt.xlabel("Num Topics")
-    plt.ylabel("coherence")
-    plt.show()
 
 
 if __name__ == '__main__':
-    texts = open("../Resource/Comments/bGzbJpLExDM.txt").read().splitlines()
-    comments = [i for i in texts if len(i) > 0]
+    yid = "T3_oj9hh1ag"
+    texts = utils.readFromFile("../Resource/Comments/" + yid + ".txt")
+    comments = []
     for t in texts:
         comments.append(t.replace("\n", " "))
-    calLDA(comments, 5)
+    calLDA(comments, 4)

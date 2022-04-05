@@ -1,0 +1,4 @@
+0 ---> 0.010*"English" + 0.009*"Dawang" + 0.008*"video" + 0.007*"love" + 0.007*"Love" + 0.006*"food" + 0.006*"watching" + 0.006*"videos" + 0.006*"Very" + 0.005*"beautiful"
+1 ---> 0.018*"Where" + 0.010*"videos" + 0.009*"video" + 0.008*"family" + 0.006*"beautiful" + 0.006*"cooking" + 0.006*"grandpa" + 0.006*"Dianxi" + 0.005*"live" + 0.005*"English"
+2 ---> 0.032*"love" + 0.011*"Dawang" + 0.011*"video" + 0.010*"beautiful" + 0.007*"watching" + 0.007*"videos" + 0.006*"It" + 0.005*"food" + 0.004*"India" + 0.004*"dianxi"
+3 ---> 0.018*"love" + 0.014*"video" + 0.013*"Love" + 0.008*"family" + 0.008*"videos" + 0.007*"nice" + 0.006*"watch" + 0.006*"bless" + 0.005*"Dawang" + 0.005*"Where"

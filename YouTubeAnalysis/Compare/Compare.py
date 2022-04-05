@@ -72,9 +72,9 @@ def compare(BID, YID):
         if trans not in ChineseList:
             inCommentNotInBulletin.append((c[0], c[1]))
 
-    with open("bid:" + BID + " yid:" + YID + ".txt", "a+", encoding="utf-8") as f:
+    with open("../Resource/CompareResult/bid:" + BID + " yid:" + YID + ".txt", "a+", encoding="utf-8") as f:
         f.write("in bulletin but not in comment \n")
-        for i in inBulletinNotInComment:
+        for i in inCommentNotInBulletin:
             f.write(str(i[0]) + ", " + str(i[1]) + "\n")
         f.write("in comment but not in bulletin \n")
         for i in inBulletinNotInComment:
